@@ -2,12 +2,12 @@ import Link from "next/link";
 
 import { UserAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 
 const Navbar = () => {
   const { user, googleSignIn, googleSignOut }: any = UserAuth();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  console.log({ user });
+  
   const handleSignIn = async () => {
     try {
       await googleSignIn();
@@ -35,14 +35,20 @@ const Navbar = () => {
   return (
     <nav className="px-10 py-5 shadow-[inset_0_-1px_0_0_#333]">
       <div className="flex justify-between items-center">
-        <Link href="/">Home</Link>
+        <ul className="flex items-center gap-2">
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          {user && (
+            <li>
+              <Link href="/profile">Profile</Link>
+            </li>
+          )}
+        </ul>
         {isLoading ? null : !user ? (
           <ul className="flex items-center gap-4">
             <li className="cursor-pointer" onClick={handleSignIn}>
               Login
-            </li>
-            <li>
-              <Link href="/register">Register</Link>
             </li>
           </ul>
         ) : (
