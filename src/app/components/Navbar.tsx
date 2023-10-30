@@ -7,8 +7,7 @@ import { redirect } from "next/navigation";
 const Navbar = () => {
   const { user, googleSignIn, googleSignOut }: any = UserAuth();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  console.log({ user });
+  
   const handleSignIn = async () => {
     try {
       await googleSignIn();
